@@ -13,7 +13,7 @@ public interface ItemRepository {
 
     Item updateItem(Item item);
 
-    Boolean deleteItem(Long id);
+    boolean deleteItem(Long id);
 
     List<Item> search(String text);
 }

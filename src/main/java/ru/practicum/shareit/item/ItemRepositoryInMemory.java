@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Repository
 @RequiredArgsConstructor
 public class ItemRepositoryInMemory implements ItemRepository {
-    public final UserService userService;
+    private final UserService userService;
     private final Map<Long, Item> items = new HashMap<>();
     private Long idMax = 1L;
 
@@ -44,11 +44,11 @@ public class ItemRepositoryInMemory implements ItemRepository {
         if (item.getAvailable() != null) {
             repoItem.setAvailable(item.getAvailable());
         }
-        return repoItem;
+        return items.put(repoItem.getId(), repoItem);
     }
 
     @Override
-    public Boolean deleteItem(Long id) {
+    public boolean deleteItem(Long id) {
         items.remove(id);
         return true;
     }

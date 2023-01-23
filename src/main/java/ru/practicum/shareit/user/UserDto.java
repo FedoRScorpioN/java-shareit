@@ -2,8 +2,8 @@ package ru.practicum.shareit.user;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.shareit.Create;
-import ru.practicum.shareit.Update;
+import ru.practicum.shareit.validator.Create;
+import ru.practicum.shareit.validator.Update;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

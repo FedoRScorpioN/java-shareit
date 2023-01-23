@@ -33,11 +33,11 @@ public class UserRepositoryInMemory implements UserRepository {
         if (user.getName() != null) {
             repoUser.setName(user.getName());
         }
-        return repoUser;
+        return users.put(repoUser.getId(), repoUser);
     }
 
     @Override
-    public Boolean deleteUser(Long id) {
+    public boolean deleteUser(Long id) {
         if (users.containsKey(id)) {
             emails.remove(users.get(id).getEmail());
             users.remove(id);

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.shareit.booking.Status;
+import ru.practicum.shareit.booking.BookingStatus;
 
 import java.util.Date;
 
@@ -19,5 +19,5 @@ public class BookingDto {
     Date end;
     Long item;
     Long booker;
-    Status status;
+    BookingStatus bookingStatus;
 }

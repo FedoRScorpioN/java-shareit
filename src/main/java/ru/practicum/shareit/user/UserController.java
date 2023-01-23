@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.shareit.Create;
-import ru.practicum.shareit.Update;
+import ru.practicum.shareit.validator.Create;
+import ru.practicum.shareit.validator.Update;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping(path = "/users")
 @RequiredArgsConstructor
 public class UserController {
-    public final UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public List<UserDto> getAllUsers() {

@@ -18,5 +18,5 @@ public class Booking {
     Date end;
     Long item;
     Long booker;
-    Status status;
+    BookingStatus bookingStatus;
 }

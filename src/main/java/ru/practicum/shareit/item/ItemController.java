@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.shareit.Create;
-import ru.practicum.shareit.Update;
+import ru.practicum.shareit.validator.Create;
+import ru.practicum.shareit.validator.Update;
 import ru.practicum.shareit.item.dto.ItemDto;
 
 import java.util.List;
@@ -22,8 +22,8 @@ import java.util.List;
 @RequestMapping("/items")
 @RequiredArgsConstructor
 public class ItemController {
-    public final ItemService itemService;
-    private final String headerUserId = "X-Sharer-User-Id";
+    private final ItemService itemService;
+    private static final String headerUserId = "X-Sharer-User-Id";
 
     @GetMapping
     public List<ItemDto> getItemsByOwner(@RequestHeader(headerUserId) Long userId) {

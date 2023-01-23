@@ -25,7 +25,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto updateItem(Long userId, Long id, ItemDto itemDto) {
-        log.info("Пользователь с ID {} создал вещь {} с ID.", userId, itemDto, id);
+        log.info("Пользователь с ID {} обновил вещь {} с ID.", userId, itemDto, id);
         itemDto.setOwnerId(userId);
         itemDto.setId(id);
         return itemMapper.toItemDto(itemRepository.updateItem(itemMapper.toItem(itemDto)));

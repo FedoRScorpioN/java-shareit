@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.shareit.Create;
+import ru.practicum.shareit.validator.Create;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
