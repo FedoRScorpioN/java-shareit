@@ -6,21 +6,26 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
+
     <groupId>ru.practicum</groupId>
     <artifactId>shareit</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
     <name>ShareIt</name>
+
     <properties>
         <java.version>11</java.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -51,12 +56,12 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.mapstruct</groupId>
+            <groupId>org.mapstruct </groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mapstruct</groupId>
+            <groupId>org.mapstruct </groupId>
             <artifactId>mapstruct-processor</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
