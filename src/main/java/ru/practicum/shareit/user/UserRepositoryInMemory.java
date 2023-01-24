@@ -24,7 +24,7 @@ public class UserRepositoryInMemory implements UserRepository {
     @Override
     public User updateUser(User user) {
         User repoUser = getUserById(user.getId());
-        if (user.getEmail() != null) {
+        if (user.getEmail() != null || repoUser.getEmail().equals(user.getEmail())) {
             emailIsAvailable(user);
             emails.remove(repoUser.getEmail());
             repoUser.setEmail(user.getEmail());
