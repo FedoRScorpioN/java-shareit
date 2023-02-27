@@ -1,4 +1,5 @@
 package ru.practicum.shareit.booking;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,9 +10,11 @@ import ru.practicum.shareit.exception.BookingException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.UserService;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 @Slf4j
 @Transactional(readOnly = true)
@@ -20,6 +23,7 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final UserService userService;
     private final BookingMapper bookingMapper;
+
     @Override
     @Transactional
     public BookingResponseDto createBooking(Long userId, BookingRequestDto bookingRequestDto) {
@@ -38,6 +42,7 @@ public class BookingServiceImpl implements BookingService {
         }
         return bookingMapper.bookingToBookingResponseDto(bookingRepository.save(booking));
     }
+
     @Override
     @Transactional
     public BookingResponseDto updateBooking(Long userId, Long id, Boolean approved) {
@@ -53,6 +58,7 @@ public class BookingServiceImpl implements BookingService {
         repoBooking.setStatus(approved ? Status.APPROVED : Status.REJECTED);
         return bookingMapper.bookingToBookingResponseDto(bookingRepository.save(repoBooking));
     }
+
     @Override
     public BookingResponseDto getByIdBooking(Long userId, Long id) {
         log.info("Вывод бронирования с ID {}.", id);
@@ -64,6 +70,7 @@ public class BookingServiceImpl implements BookingService {
         }
         return bookingMapper.bookingToBookingResponseDto(booking);
     }
+
     @Override
     public List<BookingResponseDto> getAllByBookerId(Long userId, String state) {
         log.info("Вывод всех вещей забронированных пользователя {} со статусом {}.", userId, state);
@@ -102,6 +109,7 @@ public class BookingServiceImpl implements BookingService {
                 .map(bookingMapper::bookingToBookingResponseDto)
                 .collect(Collectors.toList());
     }
+
     @Override
     public List<BookingResponseDto> getAllByOwnerId(Long userId, String state) {
         log.info("Вывод всех вещей пользователя {} со статусом {}.", userId, state);
@@ -140,6 +148,7 @@ public class BookingServiceImpl implements BookingService {
                 .map(bookingMapper::bookingToBookingResponseDto)
                 .collect(Collectors.toList());
     }
+
     private State getState(String state) {
         try {
             return State.valueOf(state);
