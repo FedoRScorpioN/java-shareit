@@ -1,6 +1,10 @@
-package ru.practicum.shareit.user;
+package ru.practicum.shareit.user.dto;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import ru.practicum.shareit.validator.Create;
 import ru.practicum.shareit.validator.Update;
@@ -9,7 +13,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
+@Getter
+@Setter
 @Builder
 @ToString
 public class UserDto {

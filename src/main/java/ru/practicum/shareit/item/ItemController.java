@@ -14,26 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.shareit.validator.Create;
 import ru.practicum.shareit.validator.Update;
-import ru.practicum.shareit.item.dto.ItemDto;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
 public class ItemController {
-    private final ItemService itemService;
-    private static final String headerUserId = "X-Sharer-User-Id";
-
-    @GetMapping
-    public List<ItemDto> getItemsByOwner(@RequestHeader(headerUserId) Long userId) {
-        return itemService.getItemsByOwner(userId);
-    }
-
-    @GetMapping("/{id}")
-    public ItemDto getItemById(@PathVariable Long id) {
-        return itemService.getItemById(id);
-    }
+    public final ItemService itemService;
+    private final String headerUserId = "X-Sharer-User-Id";
 
     @PostMapping
     public ItemDto createItem(@RequestHeader(headerUserId) Long userId,
@@ -49,12 +39,30 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deleteItem(@PathVariable Long id) {
-        return itemService.deleteItem(id);
+    public void deleteItem(@PathVariable Long id) {
+        itemService.deleteItem(id);
+    }
+
+    @GetMapping
+    public List<ItemExtendedDto> getByOwnerId(@RequestHeader(headerUserId) Long userId) {
+        return itemService.getByOwnerId(userId);
+    }
+
+    @GetMapping("/{id}")
+    public ItemExtendedDto getByIdItem(@RequestHeader(headerUserId) Long userId,
+                                       @PathVariable Long id) {
+        return itemService.getByIdItem(userId, id);
     }
 
     @GetMapping("/search")
-    public List<ItemDto> search(@RequestParam String text) {
-        return itemService.search(text);
+    public List<ItemDto> searchItem(@RequestParam String text) {
+        return itemService.searchItem(text);
+    }
+
+    @PostMapping("{id}/comment")
+    public CommentDto addCommentItem(@RequestHeader(headerUserId) long userId,
+                                     @PathVariable long id,
+                                     @Valid @RequestBody CommentRequestDto commentRequestDto) {
+        return itemService.addCommentItem(userId, id, commentRequestDto);
     }
 }

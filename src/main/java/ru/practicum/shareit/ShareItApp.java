@@ -3,7 +3,7 @@ package ru.practicum.shareit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//Спринт № 13. Ревью № 1.
+//Спринт № 14. Ревью № 1.
 
 @SpringBootApplication
 public class ShareItApp {

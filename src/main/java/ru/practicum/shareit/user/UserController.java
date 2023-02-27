@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.validator.Create;
 import ru.practicum.shareit.validator.Update;
 
@@ -19,17 +20,7 @@ import java.util.List;
 @RequestMapping(path = "/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
-
-    @GetMapping
-    public List<UserDto> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-    @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
-    }
+    public final UserService userService;
 
     @PostMapping
     public UserDto createUser(@Validated(Create.class) @RequestBody UserDto userDto) {
@@ -42,7 +33,17 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deleteUser(@PathVariable Long id) {
-        return userService.deleteUser(id);
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+    }
+
+    @GetMapping
+    public List<UserDto> getAllUser() {
+        return userService.getAllUser();
+    }
+
+    @GetMapping("/{id}")
+    public UserDto getByIdUser(@PathVariable Long id) {
+        return userService.getByIdUser(id);
     }
 }
