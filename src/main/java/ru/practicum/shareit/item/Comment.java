@@ -38,7 +38,7 @@ public class Comment {
     @Column(nullable = false)
     String text;
     @Column(name = "CREATED_DATE", nullable = false)
-    LocalDateTime createdDate;
+    LocalDateTime created;
     @OneToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "ID", nullable = false)

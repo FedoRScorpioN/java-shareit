@@ -106,7 +106,7 @@ public class ItemServiceImpl implements ItemService {
         log.info("Добавление комментария пользователем с ID {} к вещи с ID {}.", userId, id);
         commentRequestDto.setAuthorId(userId);
         commentRequestDto.setItemId(id);
-        commentRequestDto.setCreatedDate(LocalDateTime.now());
+        commentRequestDto.setCreated(LocalDateTime.now());
         Comment comment = itemMapper.commentRequestDtoToComment(commentRequestDto);
         if (bookingRepository.findByItemIdAndBookerIdAndEndIsBeforeAndStatusEquals(
                 id, userId, LocalDateTime.now(), Status.APPROVED).isEmpty()) {

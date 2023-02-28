@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class CommentRequestDto {
     @NotBlank
     String text;
-    LocalDateTime createdDate;
+    LocalDateTime created;
     Long authorId;
     Long itemId;
 }
