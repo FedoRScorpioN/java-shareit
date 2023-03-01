@@ -35,7 +35,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false)
+    @Column(name = "TEXT_CONTENT", nullable = false)
     String text;
     @Column(name = "CREATED_DATE", nullable = false)
     LocalDateTime created;
