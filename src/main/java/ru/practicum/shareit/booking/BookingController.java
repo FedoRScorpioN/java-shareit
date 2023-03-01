@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookingController {
     public final BookingService bookingService;
-    private final String headerUserId = "X-Sharer-User-Id";
+    private static final String headerUserId = "X-Sharer-User-Id";
 
     @PostMapping
     public BookingResponseDto createBooking(@RequestHeader(headerUserId) Long userId,
@@ -32,7 +32,7 @@ public class BookingController {
     @PatchMapping("/{id}")
     public BookingResponseDto updateBooking(@RequestHeader(headerUserId) Long userId,
                                             @PathVariable Long id,
-                                            @RequestParam() Boolean approved) {
+                                            @RequestParam Boolean approved) {
         return bookingService.updateBooking(userId, id, approved);
     }
 
@@ -44,13 +44,13 @@ public class BookingController {
 
     @GetMapping
     public List<BookingResponseDto> getAllByBookerId(@RequestHeader(headerUserId) Long userId,
-                                                     @RequestParam(defaultValue = "ALL", required = false) String state) {
+                                                     @RequestParam(defaultValue = "ALL") String state) {
         return bookingService.getAllByBookerId(userId, state);
     }
 
     @GetMapping("/owner")
     public List<BookingResponseDto> getAllByOwnerId(@RequestHeader(headerUserId) Long userId,
-                                                    @RequestParam(defaultValue = "ALL", required = false) String state) {
+                                                    @RequestParam(defaultValue = "ALL") String state) {
         return bookingService.getAllByOwnerId(userId, state);
     }
 }
