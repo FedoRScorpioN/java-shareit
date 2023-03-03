@@ -1,5 +1,7 @@
 package ru.practicum.shareit.user;
 
+import ru.practicum.shareit.user.dto.UserDto;
+
 import java.util.List;
 
 public interface UserService {
@@ -7,9 +9,9 @@ public interface UserService {
 
     UserDto updateUser(Long id, UserDto userDto);
 
-    Boolean deleteUser(Long id);
+    void deleteUser(Long id);
 
-    List<UserDto> getAllUsers();
+    List<UserDto> getAllUser();
 
-    UserDto getUserById(Long id);
+    UserDto getByIdUser(Long id);
 }
