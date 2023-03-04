@@ -1,4 +1,5 @@
 package ru.practicum.shareit.user;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,9 +11,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.dto.UserDto;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,6 +24,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
     @Mock
@@ -42,6 +46,7 @@ class UserServiceImplTest {
             .email("mail2@yandex.ru")
             .build();
     private UserDto updateUserDto;
+
     @BeforeEach
     public void beforeEachPatch() {
         updateUserDto = UserDto.builder()
@@ -50,11 +55,13 @@ class UserServiceImplTest {
                 .email("UpdatedMail1@yandex.ru")
                 .build();
     }
+
     void checkUserDto(User user, UserDto userDtoFromService) {
         assertEquals(user.getId(), userDtoFromService.getId());
         assertEquals(user.getName(), userDtoFromService.getName());
         assertEquals(user.getEmail(), userDtoFromService.getEmail());
     }
+
     @Nested
     class GetAllUser {
         @Test
@@ -70,6 +77,7 @@ class UserServiceImplTest {
             verify(userMapper, times(2)).toUserDto(any());
             verify(userRepository, times(1)).findAll();
         }
+
         @Test
         void shouldGetIfEmpty() {
             when(userRepository.findAll()).thenReturn(new ArrayList<>());
@@ -78,6 +86,7 @@ class UserServiceImplTest {
             verify(userRepository, times(1)).findAll();
         }
     }
+
     @Nested
     class GetByIdUser {
         @Test
@@ -89,6 +98,7 @@ class UserServiceImplTest {
             verify(userRepository, times(1)).findById(1L);
             verify(userMapper, times(1)).toUserDto(any());
         }
+
         @Test
         void shouldThrowExceptionIfUserIdNotFound() {
             when(userRepository.findById(99L)).thenReturn(Optional.empty());
@@ -97,6 +107,7 @@ class UserServiceImplTest {
             verify(userRepository, times(1)).findById(any());
         }
     }
+
     @Nested
     class CreateUser {
         @Test
@@ -107,6 +118,7 @@ class UserServiceImplTest {
             verify(userRepository, times(1)).save(user1);
         }
     }
+
     @Nested
     class UpdateUser {
         @Test
@@ -119,6 +131,7 @@ class UserServiceImplTest {
             assertEquals(updateUserDto.getName(), savedUser.getName());
             assertEquals(updateUserDto.getEmail(), savedUser.getEmail());
         }
+
         @Test
         void shouldThrowExceptionIfUserNotFound() {
             when(userRepository.findById(99L)).thenReturn(Optional.empty());
@@ -129,6 +142,7 @@ class UserServiceImplTest {
             verify(userRepository, never()).save(any());
         }
     }
+
     @Nested
     class DeleteUser {
         @Test
@@ -140,6 +154,7 @@ class UserServiceImplTest {
             verify(userRepository, times(1)).deleteById(1L);
             verify(userRepository, times(1)).findById(1L);
         }
+
         @Test
         void shouldDeleteIfUserIdNotFound() {
             when(userRepository.findById(99L)).thenReturn(Optional.empty());
@@ -150,6 +165,7 @@ class UserServiceImplTest {
             verify(userRepository, times(1)).findById(99L);
         }
     }
+
     @Nested
     class GetUserById {
         @Test
@@ -161,6 +177,7 @@ class UserServiceImplTest {
             assertEquals(user1.getEmail(), userFromService.getEmail());
             verify(userRepository, times(1)).findById(1L);
         }
+
         @Test
         void shouldThrowExceptionIfUserIdNotFound() {
             when(userRepository.findById(99L)).thenReturn(Optional.empty());

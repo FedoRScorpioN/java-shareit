@@ -1,4 +1,5 @@
 package ru.practicum.shareit.request;
+
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -13,11 +14,14 @@ import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.user.UserController;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @DataJpaTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -28,7 +32,7 @@ public class ItemRequestRepositoryTest {
     private final int from = Integer.parseInt(UserController.PAGE_DEFAULT_FROM);
     private final int size = Integer.parseInt(UserController.PAGE_DEFAULT_SIZE);
     private final Pageable pageable = PageRequest.of(from / size, size);
-    private final LocalDateTime dateTime = LocalDateTime.of(2023,1,1,10,0,0);
+    private final LocalDateTime dateTime = LocalDateTime.of(2023, 1, 1, 10, 0, 0);
     private final User user1 = User.builder()
             .id(1L)
             .name("User 1")
@@ -54,6 +58,7 @@ public class ItemRequestRepositoryTest {
             .created(dateTime)
             .items(null)
             .build();
+
     @BeforeEach
     public void beforeEach() {
         userRepository.save(user1);
@@ -61,6 +66,7 @@ public class ItemRequestRepositoryTest {
         itemRequestRepository.save(itemRequest1);
         itemRepository.save(item1);
     }
+
     void checkItemRequest(ItemRequest itemRequest, User user, LocalDateTime dateTime, ItemRequest resultItemRequest) {
         assertEquals(itemRequest.getId(), resultItemRequest.getId());
         assertEquals(itemRequest.getDescription(), resultItemRequest.getDescription());
@@ -69,6 +75,7 @@ public class ItemRequestRepositoryTest {
         assertEquals(user.getEmail(), resultItemRequest.getRequesterId().getEmail());
         assertEquals(dateTime, resultItemRequest.getCreated());
     }
+
     @Nested
     class FindByRequesterIdIdOrderByCreatedAsc {
         @Test
@@ -78,12 +85,14 @@ public class ItemRequestRepositoryTest {
             ItemRequest resultItemRequest = itemsRequest.get(0);
             checkItemRequest(itemRequest1, user2, dateTime, resultItemRequest);
         }
+
         @Test
         void shouldGetZeroIfNotRequests() {
             List<ItemRequest> itemsRequest = itemRequestRepository.findByRequesterId_IdOrderByCreatedAsc(user1.getId());
             assertTrue(itemsRequest.isEmpty());
         }
     }
+
     @Nested
     class FindByRequesterIdIdNot {
         @Test
@@ -92,6 +101,7 @@ public class ItemRequestRepositoryTest {
                     .get().collect(Collectors.toList());
             assertTrue(itemsRequest.isEmpty());
         }
+
         @Test
         void shouldGetOneIfNotOwner() {
             List<ItemRequest> itemsRequest = itemRequestRepository.findByRequesterId_IdNot(user1.getId(), pageable)
