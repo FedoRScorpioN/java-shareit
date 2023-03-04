@@ -2,8 +2,6 @@ package ru.practicum.shareit.booking;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.practicum.shareit.booking.dto.BookingRequestDto;
 import ru.practicum.shareit.booking.dto.BookingResponseDto;
 import ru.practicum.shareit.item.Item;
@@ -12,25 +10,11 @@ import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserMapper;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, ItemMapper.class})
-public abstract class BookingMapper {
-    @Autowired
-    private ItemMapper itemMapper;
+public interface BookingMapper {
+    @Mapping(target = "id", expression = "java(null)")
+    @Mapping(target = "item", expression = "java(item)")
+    @Mapping(target = "booker", expression = "java(user)")
+    Booking requestDtoToBooking(BookingRequestDto bookingRequestDto, Item item, User user, Status status);
 
-    @Mapping(source = "bookerId", target = "booker", qualifiedByName = "mapUserDtoFromId")
-    @Mapping(source = "itemId", target = "item", qualifiedByName = "mapItemDtoFromId")
-    public abstract Booking requestDtoToBooking(BookingRequestDto bookingRequestDto);
-
-    public abstract Booking responseDtoToBooking(BookingResponseDto bookingResponseDto);
-
-    public abstract BookingResponseDto bookingToBookingResponseDto(Booking booking);
-
-    @Named("mapUserDtoFromId")
-    User mapUserDtoFromId(Long userId) {
-        return itemMapper.mapUserFromUserId(userId);
-    }
-
-    @Named("mapItemDtoFromId")
-    Item mapItemDtoFromId(Long itemId) {
-        return itemMapper.mapItemFromItemId(itemId);
-    }
+    BookingResponseDto bookingToBookingResponseDto(Booking booking);
 }

@@ -31,13 +31,11 @@ public class UserServiceImpl implements UserService {
         log.info("Обновление пользователя {} с id {}.", userDto, id);
         User repoUser = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Пользователя с таким id не существует."));
-        userDto.setId(id);
-        User user = userMapper.toUser(userDto);
-        if (user.getEmail() != null) {
-            repoUser.setEmail(user.getEmail());
+        if (userDto.getEmail() != null) {
+            repoUser.setEmail(userDto.getEmail());
         }
-        if (user.getName() != null) {
-            repoUser.setName(user.getName());
+        if (userDto.getName() != null) {
+            repoUser.setName(userDto.getName());
         }
         return userMapper.toUserDto(userRepository.save(repoUser));
     }
@@ -62,5 +60,11 @@ public class UserServiceImpl implements UserService {
         log.info("Вывод пользователя с id {}.", id);
         return userMapper.toUserDto(userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Пользователя с таким id не существует.")));
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователя с таким id не существует."));
     }
 }

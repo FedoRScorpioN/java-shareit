@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.shareit.booking.Status;
 
 import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -18,13 +18,10 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 public class BookingRequestDto {
-    Long id;
-    @Future
+    @FutureOrPresent
     LocalDateTime start;
     @Future
     LocalDateTime end;
     @NotNull
     Long itemId;
-    Long bookerId;
-    Status status;
 }
