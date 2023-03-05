@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.shareit.booking.dto.BookingRequestDto;
 import ru.practicum.shareit.booking.dto.BookingResponseDto;
-import ru.practicum.shareit.user.UserController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-import static ru.practicum.shareit.user.UserController.headerUserId;
+import static ru.practicum.shareit.user.UserController.*;
 
 @RestController
 @RequestMapping(path = "/bookings")
@@ -52,9 +51,9 @@ public class BookingController {
     @GetMapping
     public List<BookingResponseDto> getAllByBookerId(
             @RequestHeader(headerUserId) Long userId,
-            @RequestParam(defaultValue = "ALL", required = false) String state,
-            @RequestParam(defaultValue = UserController.PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
-            @RequestParam(defaultValue = UserController.PAGE_DEFAULT_SIZE) @Positive Integer size) {
+            @RequestParam(defaultValue = "ALL") String state,
+            @RequestParam(defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
+            @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
         State stateEnum = State.stringToState(state).orElseThrow(
                 () -> new IllegalArgumentException("Unknown state: " + state));
         return bookingService.getAllByBookerId(userId, stateEnum, PageRequest.of(from / size, size));
@@ -62,12 +61,11 @@ public class BookingController {
 
     @GetMapping("/owner")
     public List<BookingResponseDto> getAllByOwnerId(@RequestHeader(headerUserId) Long userId,
-                                                    @RequestParam(defaultValue = "ALL", required = false) String state,
-                                                    @RequestParam(defaultValue = UserController.PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
-                                                    @RequestParam(defaultValue = UserController.PAGE_DEFAULT_SIZE) @Positive Integer size) {
+                                                    @RequestParam(defaultValue = "ALL") String state,
+                                                    @RequestParam(defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
+                                                    @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
         State stateEnum = State.stringToState(state).orElseThrow(
                 () -> new IllegalArgumentException("Unknown state: " + state));
-
         return bookingService.getAllByOwnerId(userId, stateEnum, PageRequest.of(from / size, size));
     }
 }

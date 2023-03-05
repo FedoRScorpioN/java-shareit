@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.shareit.user.UserController;
 import ru.practicum.shareit.validator.Create;
 
 import javax.validation.Valid;
@@ -21,7 +20,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-import static ru.practicum.shareit.user.UserController.headerUserId;
+import static ru.practicum.shareit.user.UserController.*;
 
 @RestController
 @RequestMapping("/items")
@@ -36,7 +35,7 @@ public class ItemController {
         return itemService.createItem(userId, itemDto);
     }
 
-    @PatchMapping("/{id}")  //Проверить
+    @PatchMapping("/{id}")
     public ItemDto updateItem(@RequestHeader(headerUserId) Long userId,
                               @PathVariable Long id,
                               @RequestBody ItemDto itemDto) {
@@ -51,8 +50,8 @@ public class ItemController {
     @GetMapping
     public List<ItemExtendedDto> getByOwnerId(
             @RequestHeader(headerUserId) Long userId,
-            @RequestParam(defaultValue = UserController.PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
-            @RequestParam(defaultValue = UserController.PAGE_DEFAULT_SIZE) @Positive Integer size) {
+            @RequestParam(defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
+            @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
         return itemService.getByOwnerId(userId, PageRequest.of(from / size, size));
     }
 
@@ -65,8 +64,8 @@ public class ItemController {
     @GetMapping("/search")
     public List<ItemDto> searchItem(
             @RequestParam String text,
-            @RequestParam(defaultValue = UserController.PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
-            @RequestParam(defaultValue = UserController.PAGE_DEFAULT_SIZE) @Positive Integer size) {
+            @RequestParam(defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
+            @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
         return itemService.searchItem(text, PageRequest.of(from / size, size));
     }
 

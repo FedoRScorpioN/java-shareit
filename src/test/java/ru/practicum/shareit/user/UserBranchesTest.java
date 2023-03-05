@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class UserBranchesTest {
     private final UserController userController;
 
-    private void checkUserDto(UserDto userDto, UserDto userDtoFromController) {
+    void checkUserDto(UserDto userDto, UserDto userDtoFromController) {
         assertEquals(userDto.getId(), userDtoFromController.getId());
         assertEquals(userDto.getName(), userDtoFromController.getName());
         assertEquals(userDto.getEmail(), userDtoFromController.getEmail());

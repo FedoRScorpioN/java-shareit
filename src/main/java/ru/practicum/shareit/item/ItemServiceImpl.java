@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.BookingRepository;
-import ru.practicum.shareit.booking.Status;
 import ru.practicum.shareit.booking.dto.BookingItemDto;
 import ru.practicum.shareit.exception.BookingException;
 import ru.practicum.shareit.exception.ForbiddenException;
@@ -19,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static ru.practicum.shareit.booking.Status.APPROVED;
 
 @Service
 @Slf4j
@@ -104,7 +104,7 @@ public class ItemServiceImpl implements ItemService {
         Comment comment = itemMapper.commentRequestDtoToComment(commentRequestDto,
                 LocalDateTime.now(), userService.getUserById(userId), id);
         if (bookingRepository.findByItemIdAndBookerIdAndEndIsBeforeAndStatusEquals(
-                id, userId, LocalDateTime.now(), Status.APPROVED).isEmpty()) {
+                id, userId, LocalDateTime.now(), APPROVED).isEmpty()) {
             throw new BookingException("Пользователь не брал данную вещь в аренду.");
         }
         return itemMapper.commentToCommentDto(commentRepository.save(comment));
@@ -117,24 +117,20 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private BookingItemDto getLastBooking(Item item) {
-        List<Booking> bookings = bookingRepository.findByItemIdAndStartBeforeAndStatusEqualsOrderByStartDesc(
-                item.getId(), LocalDateTime.now(), Status.APPROVED);
-        if (bookings.isEmpty()) {
-            return null;
-        } else {
-            Booking lastBooking = bookings.get(0);
-            return itemMapper.bookingToBookingItemDto(lastBooking);
-        }
+        return bookingRepository.findByItemIdAndStartBeforeAndStatusEqualsOrderByStartDesc(
+                        item.getId(), LocalDateTime.now(), APPROVED)
+                .stream()
+                .findFirst()
+                .map(itemMapper::bookingToBookingItemDto)
+                .orElse(null);
     }
 
     private BookingItemDto getNextBooking(Item item) {
-        List<Booking> bookings = bookingRepository.findByItemIdAndStartAfterAndStatusEqualsOrderByStartAsc(
-                item.getId(), LocalDateTime.now(), Status.APPROVED);
-        if (bookings.isEmpty()) {
-            return null;
-        } else {
-            Booking nextBooking = bookings.get(0);
-            return itemMapper.bookingToBookingItemDto(nextBooking);
-        }
+        return bookingRepository.findByItemIdAndStartAfterAndStatusEqualsOrderByStartAsc(
+                        item.getId(), LocalDateTime.now(), APPROVED)
+                .stream()
+                .findFirst()
+                .map(itemMapper::bookingToBookingItemDto)
+                .orElse(null);
     }
 }
