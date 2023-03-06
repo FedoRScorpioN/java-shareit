@@ -19,7 +19,7 @@ public class ItemExtendedDto {
     String description;
     Boolean available;
     Long ownerId;
-    Long request;
+    Long requestId;
     BookingItemDto lastBooking;
     BookingItemDto nextBooking;
     List<CommentDto> comments;

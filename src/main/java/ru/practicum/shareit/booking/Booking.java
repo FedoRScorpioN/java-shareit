@@ -24,6 +24,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "BOOKINGS", schema = "public")
@@ -63,6 +64,6 @@ public class Booking {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, start, end, item, booker, status);
     }
 }
