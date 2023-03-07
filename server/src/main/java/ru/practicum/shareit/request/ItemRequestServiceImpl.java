@@ -1,4 +1,5 @@
 package ru.practicum.shareit.request;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -10,9 +11,11 @@ import ru.practicum.shareit.item.ItemDto;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserService;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 @Slf4j
 @Transactional(readOnly = true)
@@ -22,6 +25,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     private final ItemRequestRepository itemRequestRepository;
     private final ItemRequestMapper itemRequestMapper;
     private final ItemMapper itemMapper;
+
     @Override
     @Transactional
     public ItemRequestDto createRequest(Long userId, ItemRequestCreateDto itemRequestCreateDto) {
@@ -30,6 +34,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         ItemRequest itemRequest = itemRequestMapper.toItemRequest(itemRequestCreateDto, user, LocalDateTime.now());
         return itemRequestMapper.toItemRequestDto(itemRequestRepository.save(itemRequest));
     }
+
     @Override
     public ItemRequestExtendedDto getByIdRequest(Long userId, Long id) {
         log.info("Вывод запроса вещи с id {} пользователем с id {}.", id, userId);
@@ -41,6 +46,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
                 .collect(Collectors.toList());
         return itemRequestMapper.toItemRequestExtendedDto(itemRequest, items);
     }
+
     @Override
     public List<ItemRequestExtendedDto> getByRequesterId(Long userId) {
         log.info("Вывод всех запросов вещей пользователем с id {}.", userId);
@@ -56,6 +62,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
                 )
                 .collect(Collectors.toList());
     }
+
     @Override
     public List<ItemRequestExtendedDto> getAllRequest(Long userId, Pageable pageable) {
         log.info("Вывод всех запросов вещей постранично {}.", pageable);
