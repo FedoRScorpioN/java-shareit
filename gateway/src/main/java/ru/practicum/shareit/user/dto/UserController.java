@@ -1,9 +1,11 @@
-package ru.practicum.shareit.user;
+package ru.practicum.shareit.user.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.user.UserClient;
+import ru.practicum.shareit.user.UserDto;
 import ru.practicum.shareit.validator.Create;
 import ru.practicum.shareit.validator.Update;
 
@@ -11,9 +13,6 @@ import ru.practicum.shareit.validator.Update;
 @RequestMapping(path = "/users")
 @RequiredArgsConstructor
 public class UserController {
-    public static final String headerUserId = "X-Sharer-User-Id";
-    public static final String PAGE_DEFAULT_FROM = "0";
-    public static final String PAGE_DEFAULT_SIZE = "10";
     private final UserClient userClient;
 
     @PostMapping

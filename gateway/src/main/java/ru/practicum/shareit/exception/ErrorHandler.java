@@ -19,7 +19,7 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(final RuntimeException exception) {
-        log.error("400 {}", exception.getMessage(), exception);
+        log.error("500 {}", exception.getMessage(), exception);
         return new ErrorResponse(exception.getMessage());
     }
 }

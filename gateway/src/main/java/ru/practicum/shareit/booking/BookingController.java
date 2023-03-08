@@ -4,19 +4,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.booking.dto.BookingRequestDto;
 import ru.practicum.shareit.exception.BookingException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
-import static ru.practicum.shareit.user.UserController.*;
-
 @RestController
 @RequestMapping(path = "/bookings")
 @RequiredArgsConstructor
 @Validated
 public class BookingController {
+    public static final String headerUserId = "X-Sharer-User-Id";
+    public static final String PAGE_DEFAULT_FROM = "0";
+    public static final String PAGE_DEFAULT_SIZE = "10";
     private final BookingClient bookingClient;
 
     @PostMapping
@@ -47,9 +49,9 @@ public class BookingController {
             @RequestParam(defaultValue = "ALL") String state,
             @RequestParam(defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
             @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
-        State stateEnum = State.stringToState(state)
+        BookingState bookingStateEnum = BookingState.stringToState(state)
                 .orElseThrow(() -> new IllegalArgumentException("Unknown state: " + state));
-        return bookingClient.getAllByBookerId(userId, stateEnum, from, size);
+        return bookingClient.getAllByBookerId(userId, bookingStateEnum, from, size);
     }
 
     @GetMapping("/owner")
@@ -58,8 +60,8 @@ public class BookingController {
             @RequestParam(defaultValue = "ALL") String state,
             @RequestParam(defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
             @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
-        State stateEnum = State.stringToState(state).orElseThrow(
+        BookingState bookingStateEnum = BookingState.stringToState(state).orElseThrow(
                 () -> new IllegalArgumentException("Unknown state: " + state));
-        return bookingClient.getAllByOwnerId(userId, stateEnum, from, size);
+        return bookingClient.getAllByOwnerId(userId, bookingStateEnum, from, size);
     }
 }

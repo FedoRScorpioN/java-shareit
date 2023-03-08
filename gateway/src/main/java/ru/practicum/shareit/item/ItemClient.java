@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class ItemClient extends BaseClient {
+public final class ItemClient extends BaseClient {
     private static final String API_PREFIX = "/items";
 
     @Autowired
